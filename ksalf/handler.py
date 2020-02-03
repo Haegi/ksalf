@@ -1,14 +1,15 @@
 from http.server import BaseHTTPRequestHandler
 from http import HTTPStatus
-import re
 from os import curdir, sep
+import re
+
 
 class HTTPHandler(BaseHTTPRequestHandler):
     endpoints = {}
 
-    def route(route_path = "/"):
+    def route(route_path="/"):
         """
-        Registers a GET route for the handler.
+        Register a GET route for the handler.
 
         Keyword Arguments:
         route_path: request route -> string (default: "/")
@@ -18,6 +19,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
             # Registers a function for the given route.
             arguments = func.__code__.co_varnames[:func.__code__.co_argcount]
             HTTPHandler.endpoints[route_path] = func
+
             def call(self, *args, **kwargs):
                 # Gets called when the function gets called
                 # Returns method, which is associated with the requests route
@@ -34,20 +36,19 @@ class HTTPHandler(BaseHTTPRequestHandler):
             return call
         return decorate
 
-
     def do_GET(self):
         """
-        Gets called on a GET request and parses the url paramters of the request.
+        Call on a GET request and parses the url paramters of the request.
+
         It then calls the GET() method.
         """
         self.parameters = self.__parse_request()
         self.request_path = self.parameters.get("path")
         self.GET()
 
-
     def __parse_request(self):
         """
-        Parses the arguements(after the ?) in the url.
+        Parse the arguements(after the ?) in the url.
 
         Example:
         localhost:8080?name=peter&year=2020
@@ -55,7 +56,7 @@ class HTTPHandler(BaseHTTPRequestHandler):
         paramter["year"] = "2020"
 
         Return:
-        parameters: arguments -> dict
+        parameters: paramters in the url -> dict
         """
         parameters = {}
         splitted_path = self.path.split("?")
@@ -68,15 +69,15 @@ class HTTPHandler(BaseHTTPRequestHandler):
                 parameters[params[i]] = params[i+1]
         return parameters
 
-
-    def respond(self, response_blob, mimetype = "text/html"):
-        """ Create a http response.
+    def respond(self, response_blob, mimetype="text/html"):
+        """
+        Create a http response.
 
         Keyword arguments:
         response_blob: content -> bytes
-        mimetype: Returntype, please specify -> string (default: text/plain)
+        mimetype: Return type, please specify -> string (default: text/plain)
         """
-        self.send_response(200)
+        self.send_response(HTTPStatus.OK)
         self.send_header('Content-type', mimetype)
         self.end_headers()
         self.wfile.write(response_blob)
@@ -84,7 +85,8 @@ class HTTPHandler(BaseHTTPRequestHandler):
 
     def GET(self):
         """
-        Default method for a GET request.
+        Automatically called on GET request.
+
         Override with own implementation.
         """
         pass

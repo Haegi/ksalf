@@ -2,12 +2,12 @@
 
 [![PyPI](https://img.shields.io/pypi/v/ksalf.svg)](https://pypi.org/project/ksalf/)   
 
-A lightweight experimental HTTP webserver inspired by flask.   
+A lightweight experimental HTTP handler inspired by flask.   
 **! This is just a experimental (fun) project, please don't use it in production !**
 
 ## Implemtation
-Ksalf is a lightweight extension of the [python (base) http server](https://docs.python.org/3/library/http.server.html)   .    
-It provides new feature like **url parsing and html responses**, to the python in-build http server.  
+Ksalf is a lightweight handler for the [python (base) http server](https://docs.python.org/3/library/http.server.html)   .    
+It provides new feature like **URL parsing and HTML responses**, to the python in-build http server.  
 Ksalf currently only supports **GET** requests.    
 The project was inspired by the [flask python project](https://github.com/pallets/flask).
 
